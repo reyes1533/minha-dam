@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursor Suave + Botões Fugitivos</title>
+
+  <style>
+    body {
+      background-color: black;
+      margin: 0;
+      height: 100vh;
+      overflow: hidden;
+      text-align: center;
+  
+    }
+
+    h1 {
+      text-align: center;
+      color: antiquewhite;
+      font-size: 50px;
+      margin-top: 50px;
+    }
+
+    button {
+      cursor: pointer;
+      border: solid rgb(184, 0, 204);
+      font-family: Playfair;
+      font-size: 14px;
+      color: rgb(255, 255, 255);
+      padding: 10px 30px;
+      width: 110px;
+      border-radius: 25px;
+      background: linear-gradient(159deg, rgb(84, 58, 102) 0%, rgb(197, 0, 204) 100%);
+      font-weight: 500;
+      display: inline-block;
+      position: absolute; /* Para mover os botões */
+      transition: top 0.3s ease, left 0.3s ease; /* Suavizar o movimento dos botões */
+    }
+
+  </style>
+</head>
+
+<body>
+  <h1>Quer namorar comigo?</h1>
+  <button id="buttonYes">Sim</button>
+  <button id="buttonNo">Não</button>
+
+  <!-- Cursor personalizado -->
+
+  <script>
+    const botaoSim = document.getElementById('buttonYes');
+    const botaoNao = document.getElementById('buttonNo');
+
+    let mouseX = 0, mouseY = 0;
+    let cursorX = 0, cursorY = 0;
+
+    // Evento para capturar o movimento do mouse
+    document.addEventListener('mousemove', (event) => {
+      mouseX = event.clientX;
+      mouseY = event.clientY;
+      moverBotao(botaoSim, event);
+      moverBotao(botaoNao, event);
+    });
+
+    // Função que move os botões quando o mouse se aproxima
+    function moverBotao(botao, event) {
+      const botaoX = botao.offsetLeft + botao.offsetWidth / 2;
+      const botaoY = botao.offsetTop + botao.offsetHeight / 2;
+
+      const distanciaX = Math.abs(mouseX - botaoX);
+      const distanciaY = Math.abs(mouseY - botaoY);
+
+      // Se o mouse estiver muito próximo do botão, ele se move
+      if (distanciaX < 100 && distanciaY < 50) {
+        const larguraJanela = window.innerWidth;
+        const alturaJanela = window.innerHeight;
+
+        let novaPosicaoX = Math.random() * (larguraJanela - botao.offsetWidth);
+        let novaPosicaoY = Math.random() * (alturaJanela - botao.offsetHeight);
+
+        // Impede que o botão vá para fora da tela
+        novaPosicaoX = Math.max(0, Math.min(novaPosicaoX, larguraJanela - botao.offsetWidth));
+        novaPosicaoY = Math.max(0, Math.min(novaPosicaoY, alturaJanela - botao.offsetHeight));
+
+        botao.style.left = `${novaPosicaoX}px`;
+        botao.style.top = `${novaPosicaoY}px`;
+      }
+    }
+  </script>
+</body>
+
+</html>
+
+
